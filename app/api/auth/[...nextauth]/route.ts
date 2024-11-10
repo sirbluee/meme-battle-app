@@ -31,21 +31,21 @@ const handler = NextAuth({
       
       return session;
     },
-    async signIn({ user, account }) {
+    async signIn({ user, account }: { user: any; account: any }) {
       await dbConnect();
-      
+
       const existingUser = await User.findOne({ email: user.email });
       if (!existingUser) {
         await User.create({
           name: user.name,
           email: user.email,
           image: user.image,
-          provider: account.provider,
+          provider: account?.provider,
         });
       }
-      
+
       return true;
-    },
+    }
   },
   pages: {
     signIn: '/auth/signin',
